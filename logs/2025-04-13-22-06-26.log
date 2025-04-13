@@ -1,0 +1,9 @@
+[2025-04-13 22:06:26,883] 26 src.components.data_ingetion - INFO - Reading dataset from Dataset\retail_sales.csv.
+[2025-04-13 22:06:28,829] 31 src.components.data_ingetion - INFO - Dataset shape: (52585, 1).
+[2025-04-13 22:06:28,829] 32 src.components.data_ingetion - INFO - Dataset columns: Index(['Sales'], dtype='object').
+[2025-04-13 22:06:28,829] 33 src.components.data_ingetion - INFO - Dataset read successfully.
+[2025-04-13 22:06:28,915] 38 src.components.data_ingetion - INFO - Feature store file saved at artifacts\2025-04-13-22-06-26\data_ingestion\feature_store.csv.
+[2025-04-13 22:06:28,915] 50 src.components.data_ingetion - INFO - Splitting data into train and test sets.
+[2025-04-13 22:06:28,917] 53 src.components.data_ingetion - INFO - Train shape: (42068, 1).
+[2025-04-13 22:06:28,917] 54 src.components.data_ingetion - INFO - Test shape: (10517, 1).
+[2025-04-13 22:06:28,917] 55 src.components.data_ingetion - INFO - Data split successfully.

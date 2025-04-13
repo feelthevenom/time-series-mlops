@@ -19,9 +19,11 @@ class TrainingPipelineConfig:
 
 class DataingetionConfig:
     def __init__(self, training_pipeline_config: TrainingPipelineConfig):
-        try:
-            logger.info(f"Data Ingestion Configuration is setting up.")
+        """
+        Data Ingestion Configuration for ingesting the data from the source and saving it to the specified directory.
 
+        """
+        try:
             # Dataset Directry
             self.dataset_dir = os.path.join(config.DATA_DIRR, config.DATA_FILE_NAME)
             
@@ -38,5 +40,24 @@ class DataingetionConfig:
             self.test_file_path = os.path.join(self.ingested_data_dirr_path, config.TESTING_FILE_NAME)
 
             
+        except Exception as e:
+            raise CustomException(e, sys)
+        
+class DatavalidationConfig:
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        """
+        Data Validation configuation for validating the data
+        
+        """
+        try:
+            # Data Validation Directory to save the validated results
+            self.validation_dirr = os.path.join(training_pipeline_config.artifact_dir, config.VALIDATION_DIRR_NAME)
+
+            # Drift Report Directory to save the drift report
+            self.drift_report_dirr_path = os.path.join(self.validation_dirr, config.DRIFT_REPORT_DIRR_PATH)
+
+            # schema file path to validate the columns and data types
+            self.schema_file_path = os.path.join(config.DATA_SCHEMA_DIRR_NAME, config.SCHEMA_FILE_NAME)
+
         except Exception as e:
             raise CustomException(e, sys)

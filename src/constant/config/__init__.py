@@ -7,6 +7,8 @@ It includes settings for the database, API keys, and other configurations.
 import os
 
 
+SCHEMA_FILE_NAME: str = "schema.yaml"
+
 """"
 Data Ingestion Configuration
 """
@@ -21,3 +23,11 @@ INGETION_DIRR_NAME: str = "data_ingestion"
 FEATURE_FILE_NAME: str = "feature_store.csv"
 TRAINING_FILE_NAME: str = "train.csv"
 TESTING_FILE_NAME: str = "test.csv"
+
+"""
+Data validation Configuration
+"""
+
+VALIDATION_DIRR_NAME: str = "data_validation"
+DRIFT_REPORT_DIRR_PATH: str = "drift detection report"
+DATA_SCHEMA_DIRR_NAME: str = "data_schema"

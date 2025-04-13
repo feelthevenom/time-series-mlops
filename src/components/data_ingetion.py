@@ -4,6 +4,8 @@ import pandas as pd
 
 from src.exception.exception import CustomException
 from src.logging.logger import logging
+
+from src.entity.artifact_entity import DataingestionArtifact
 from src.entity.config_entity import DataingetionConfig
 from src.constant import config
 
@@ -16,6 +18,9 @@ class DataIngestion:
         self.data_ingestion_config = data_ingestion_config
         
     def read_source_data(self):
+        """
+        Read the source data from the dataset directory and return a DataFrame.
+        """
         try:
             self.dataset_dir = self.data_ingestion_config.dataset_dir
             logger.info(f"Reading dataset from {self.dataset_dir}.")
@@ -37,6 +42,10 @@ class DataIngestion:
             raise CustomException(e, sys)
 
     def split_data_into_train_test(self, df: pd.DataFrame):
+        """
+        Split the data into train and test sets and save them to the specified paths.
+        Args: df (pd.DataFrame): The DataFrame to split.
+        """
         try:
             logger.info(f"Splitting data into train and test sets.")
 
@@ -46,10 +55,28 @@ class DataIngestion:
             logger.info(f"Data split successfully.")
             
             os.makedirs(self.data_ingestion_config.ingested_data_dirr_path, exist_ok=True)
-            
             train.to_csv(self.data_ingestion_config.train_file_path, index=True)
             test.to_csv(self.data_ingestion_config.test_file_path, index=True)
             
-        
+        except Exception as e:
+            raise CustomException(e, sys)
+    
+    def initiate_data_ingestion(self):
+        """
+        Initiate the data ingestion process.
+        This method reads the source data, splits it into train and test sets, then returns the path for data validation.
+        Returns: DataingetionArtifact: An object containing the paths of the ingested data.
+        """
+        try:
+            df = self.read_source_data()
+            self.split_data_into_train_test(df=df)
+            logger.info(f"Data ingestion completed successfully.")
+
+            dataingetionartifact = DataingestionArtifact(
+                feature_store_path = self.feature_store_file_path,
+                train_file_path = self.train_file_path,
+                test_file_path = self.test_file_path
+            )
+            return dataingetionartifact
         except Exception as e:
             raise CustomException(e, sys)

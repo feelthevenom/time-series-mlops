@@ -1,5 +1,0 @@
-[2025-04-11 14:20:50,385] 23 src.entity.config_entity - INFO - Data Ingestion Configuration is setting up.
-[2025-04-11 14:20:50,385] 21 src.components.data_ingetion - INFO - Reading dataset from Dataset\retail_sales.csv.
-[2025-04-11 14:20:52,209] 26 src.components.data_ingetion - INFO - Dataset shape: (52585, 1).
-[2025-04-11 14:20:52,209] 27 src.components.data_ingetion - INFO - Dataset columns: Index(['Sales'], dtype='object').
-[2025-04-11 14:20:52,209] 28 src.components.data_ingetion - INFO - Dataset read successfully.
