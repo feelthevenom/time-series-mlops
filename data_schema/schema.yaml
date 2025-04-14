@@ -1,2 +1,3 @@
 columns:
+  - Date: object
   - Sales: float64

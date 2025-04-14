@@ -12,12 +12,11 @@ if __name__ == "__main__":
     # Data Ingestion
     data_ingestion = DataIngestion(data_ingestion_config=data_ingestion_config)
 
-    df = data_ingestion.read_source_data()
-    data_ingestion.split_data_into_train_test(df=df)
+    data_ingetion_artifact = data_ingestion.initiate_data_ingestion()
+
     # Data Validation
     data_validation_config = DatavalidationConfig(training_pipeline_config=training_pipeline_config)
 
-    data_validation = DataValidation(data_validation_config)
+    data_validation = DataValidation(data_validation_config=data_validation_config, data_ingetion_artifact = data_ingetion_artifact)
 
-
-    data_validation.is_columns_exist(schema_file_path=data_validation_config.schema_file_path, df=df)
+    data_validation_artifact = data_validation.initiate_data_validation()

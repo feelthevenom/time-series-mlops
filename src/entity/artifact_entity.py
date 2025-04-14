@@ -12,3 +12,4 @@ class DataValidationArtifact:
     train_file_path: str
     test_file_path: str
     is_data_validated: bool = False
+    

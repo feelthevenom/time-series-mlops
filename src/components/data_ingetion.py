@@ -73,9 +73,9 @@ class DataIngestion:
             logger.info(f"Data ingestion completed successfully.")
 
             dataingetionartifact = DataingestionArtifact(
-                feature_store_path = self.feature_store_file_path,
-                train_file_path = self.train_file_path,
-                test_file_path = self.test_file_path
+                feature_store_path = self.data_ingestion_config.feature_store_file_path,
+                train_file_path = self.data_ingestion_config.train_file_path,
+                test_file_path = self.data_ingestion_config.test_file_path
             )
             return dataingetionartifact
         except Exception as e:
