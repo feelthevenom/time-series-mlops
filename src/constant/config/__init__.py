@@ -41,3 +41,12 @@ Data Transformation Configuration
 
 PREPROCESSED_FILE_DIRR: str = "Preprocessed"
 PREPROCESS_FILE_NAME: str = "preprocess.npz"
+
+"""
+Model traininig Configuration
+"""
+
+MODEL_TRAINED_FILE_DIRR: str = "Trained models"
+MODEL_TRAINED_FILE_NAME: str = "model.keras"
+TRAIN_EPOCHS: int = 15
+TRAIN_BATCH_SIZE: int = 32

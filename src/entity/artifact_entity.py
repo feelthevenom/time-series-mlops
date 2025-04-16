@@ -16,3 +16,8 @@ class DataValidationArtifact:
 @dataclass
 class DataTransformationArtifact:
     preprocessed_data_file: str
+    window_size: int
+
+@dataclass
+class ModelTrainingArtifact:
+    train_model_path: str

@@ -83,7 +83,8 @@ class DataTransformation:
                     preprocessed_file_path= self.datatranformation_config.preprocessed_file_path
                 )
                 return DataTransformationArtifact(
-                    preprocessed_data_file = self.datatranformation_config.preprocessed_file_path
+                    preprocessed_data_file = self.datatranformation_config.preprocessed_file_path,
+                    window_size = self.datatranformation_config.window_size
                 )
             else:
                 logger.error("Data is not validated please check data before pre processing the data.")

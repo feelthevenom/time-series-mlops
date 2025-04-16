@@ -74,3 +74,12 @@ class DataTransformationConfig:
 
         except Exception as e:
             raise CustomException(e, sys)
+        
+class ModelTrainingConfig:
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        try:
+            self.train_model_file_path: str = os.path.join(training_pipeline_config.artifact_dir, config.MODEL_TRAINED_FILE_DIRR, config.MODEL_TRAINED_FILE_NAME)
+            self.train_epoch: int = config.TRAIN_EPOCHS
+            self.train_batch: int = config.TRAIN_BATCH_SIZE
+        except Exception as e:
+            raise CustomException(e, sys)
