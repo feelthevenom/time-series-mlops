@@ -8,6 +8,9 @@ import os
 
 
 SCHEMA_FILE_NAME: str = "schema.yaml"
+WINDOW_SIZE=24
+
+
 
 """"
 Data Ingestion Configuration
@@ -31,3 +34,10 @@ Data validation Configuration
 VALIDATION_DIRR_NAME: str = "data_validation"
 DRIFT_REPORT_DIRR_PATH: str = "drift detection report"
 DATA_SCHEMA_DIRR_NAME: str = "data_schema"
+
+"""
+Data Transformation Configuration
+"""
+
+PREPROCESSED_FILE_DIRR: str = "Preprocessed"
+PREPROCESS_FILE_NAME: str = "preprocess.npz"

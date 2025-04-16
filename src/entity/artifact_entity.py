@@ -13,3 +13,6 @@ class DataValidationArtifact:
     test_file_path: str
     is_data_validated: bool = False
     
+@dataclass
+class DataTransformationArtifact:
+    preprocessed_data_file: str

@@ -25,19 +25,19 @@ class DataingetionConfig:
         """
         try:
             # Dataset Directry
-            self.dataset_dir = os.path.join(config.DATA_DIRR, config.DATA_FILE_NAME)
+            self.dataset_dir: str = os.path.join(config.DATA_DIRR, config.DATA_FILE_NAME)
             
             # Data Ingested Directry
-            self.ingested_data_dirr_path = os.path.join(training_pipeline_config.artifact_dir,config.INGETION_DIRR_NAME)
+            self.ingested_data_dirr_path: str = os.path.join(training_pipeline_config.artifact_dir,config.INGETION_DIRR_NAME)
             
             # Feature Directory
-            self.feature_store_file_path = os.path.join(self.ingested_data_dirr_path, config.FEATURE_FILE_NAME)
+            self.feature_store_file_path: str = os.path.join(self.ingested_data_dirr_path, config.FEATURE_FILE_NAME)
 
             # Train Directory
-            self.train_file_path = os.path.join(self.ingested_data_dirr_path, config.TRAINING_FILE_NAME)
+            self.train_file_path: str = os.path.join(self.ingested_data_dirr_path, config.TRAINING_FILE_NAME)
 
             # Test Directory
-            self.test_file_path = os.path.join(self.ingested_data_dirr_path, config.TESTING_FILE_NAME)
+            self.test_file_path: str = os.path.join(self.ingested_data_dirr_path, config.TESTING_FILE_NAME)
 
             
         except Exception as e:
@@ -51,13 +51,26 @@ class DatavalidationConfig:
         """
         try:
             # Data Validation Directory to save the validated results
-            self.validation_dirr = os.path.join(training_pipeline_config.artifact_dir, config.VALIDATION_DIRR_NAME)
+            self.validation_dirr: str = os.path.join(training_pipeline_config.artifact_dir, config.VALIDATION_DIRR_NAME)
 
             # Drift Report Directory to save the drift report
-            self.drift_report_dirr_path = os.path.join(self.validation_dirr, config.DRIFT_REPORT_DIRR_PATH)
+            self.drift_report_dirr_path: str = os.path.join(self.validation_dirr, config.DRIFT_REPORT_DIRR_PATH)
 
             # schema file path to validate the columns and data types
-            self.schema_file_path = os.path.join(config.DATA_SCHEMA_DIRR_NAME, config.SCHEMA_FILE_NAME)
+            self.schema_file_path: str = os.path.join(config.DATA_SCHEMA_DIRR_NAME, config.SCHEMA_FILE_NAME)
+
+        except Exception as e:
+            raise CustomException(e, sys)
+        
+class DataTransformationConfig:
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        """
+        Data Transformation config for training the model.
+        """
+        try:
+            # Preprocessed file path to save and load for training
+            self.preprocessed_file_path: str = os.path.join(training_pipeline_config.artifact_dir, config.PREPROCESSED_FILE_DIRR ,config.PREPROCESS_FILE_NAME)
+            self.window_size: str = config.WINDOW_SIZE
 
         except Exception as e:
             raise CustomException(e, sys)

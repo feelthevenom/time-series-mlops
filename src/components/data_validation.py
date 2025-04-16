@@ -71,6 +71,8 @@ class DataValidation:
             train_df = pd.read_csv(train_file_path)
             test_df = pd.read_csv(test_file_path)
 
+            status = True
+
             # Check the Columns is train datafram are same
             if self.is_columns_exist(schema_file_path = self.data_validation_config.schema_file_path, file_path = train_file_path):
                 logger.info("Both train file and schema columns are same")
@@ -80,11 +82,12 @@ class DataValidation:
             # Check both train and test contains same number of columns 
             elif sorted(list(train_df.columns)) == sorted(list(test_df.columns)):
                 logger.info("Both train and test contains same columns")
-                return True
             else:
                 logger.error("Missing or mismatch column names found in train or test")
-                return False
-
+                status =  False
+                
+            return status
+        
         except Exception as e:
             raise CustomException(e,sys)
         
@@ -94,6 +97,8 @@ class DataValidation:
             self.is_columns_exist(schema_file_path= self.data_validation_config.schema_file_path, file_path = self.data_ingetion_artifact.feature_store_path)
             # Validate the train and test column and data type.
             validate_status = self.is_columns_same_train_test(train_file_path = self.data_ingetion_artifact.train_file_path, test_file_path = self.data_ingetion_artifact.test_file_path)
+
+            logger.info(f"Validation status = {validate_status}")
 
             return DataValidationArtifact(
                 train_file_path = self.data_ingetion_artifact.train_file_path,

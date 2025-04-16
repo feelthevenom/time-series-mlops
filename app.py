@@ -1,6 +1,8 @@
 from src.components.data_ingetion import DataIngestion
 from src.components.data_validation import DataValidation
-from src.entity.config_entity import DataingetionConfig, DatavalidationConfig, TrainingPipelineConfig
+from src.components.data_transformtion import DataTransformation
+
+from src.entity.config_entity import DataingetionConfig, DatavalidationConfig, TrainingPipelineConfig, DataTransformationConfig
 
 
 if __name__ == "__main__":
@@ -20,3 +22,10 @@ if __name__ == "__main__":
     data_validation = DataValidation(data_validation_config=data_validation_config, data_ingetion_artifact = data_ingetion_artifact)
 
     data_validation_artifact = data_validation.initiate_data_validation()
+
+    # Data transforming
+    data_transformation_config = DataTransformationConfig(training_pipeline_config=training_pipeline_config)
+
+    data_transformation = DataTransformation(datavalidation_artifact=data_validation_artifact, datatranformation_config = data_transformation_config)
+
+    data_transformation.initiate_data_transforamtion()
