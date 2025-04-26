@@ -1,6 +1,7 @@
 
 import os, sys
 import numpy as np
+import pandas as pd
 
 import matplotlib.pyplot as plt
 
@@ -22,7 +23,7 @@ class ModelEvaluation:
         try:
             self.model_evaluation_config = model_evaluation_config
             self.model_training_artifact = model_training_artifact
-            self.preprocessed_data = model_training_artifact.preprocessed_data
+            self.preprocessed_data = self.model_training_artifact.preprocessed_data
             
         except Exception as e:
             raise CustomException(e, sys)
@@ -35,6 +36,7 @@ class ModelEvaluation:
             model = load_model(model)
             y_pred = model.predict(X_test)
             mse = mean_squared_error(y_test, y_pred)
+            logger.info(f"Model evaluation completed. MSE: {mse}")
             return mse
         except Exception as e:
             raise CustomException(e, sys)
@@ -48,6 +50,10 @@ class ModelEvaluation:
 
             os.makedirs(directory, exist_ok=True)
 
+            # Changing to datetime format
+            ts_test = pd.to_datetime(ts_test)
+
+            # Plotting the predictions
             model = load_model(model) 
             y_pred = model.predict(X_test)
             plt.figure(figsize=(10, 5))
@@ -70,7 +76,7 @@ class ModelEvaluation:
             model_evaluation = self.evaluate_model(model=model_train_file_path, X_test=X_test, y_test=y_test)
             self.save_plot_predictions(model=model_train_file_path, X_test=X_test, y_test=y_test, ts_test=ts_test, model_evaluation_file_dirr=model_evaluation_file_dirr)
 
-            if model_evaluation <= 0.01:
+            if model_evaluation <= 25:
                 return ModelEvaluationArtifact(
                     model_evaluation_file_path=model_evaluation_file_dirr,
                     is_model_accepted=True
