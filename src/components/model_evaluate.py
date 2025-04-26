@@ -1,0 +1,85 @@
+
+import os, sys
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+from src.logging.logger import logging
+from src.exception.exception import CustomException
+
+from src.entity.config_entity import ModelEvaluationConfig
+from src.entity.artifact_entity import ModelEvaluationArtifact, ModelTrainingArtifact
+
+from tensorflow.keras.models import load_model
+from sklearn.metrics import mean_squared_error
+
+from src.utils.helper import read_preprocessed_data
+
+logger = logging.getLogger(__name__)
+
+class ModelEvaluation:
+    def __init__(self, model_evaluation_config: ModelEvaluationConfig, model_training_artifact: ModelTrainingArtifact):
+        try:
+            self.model_evaluation_config = model_evaluation_config
+            self.model_training_artifact = model_training_artifact
+            self.preprocessed_data = model_training_artifact.preprocessed_data
+            
+        except Exception as e:
+            raise CustomException(e, sys)
+        
+    def evaluate_model(self, model: str, X_test: np.ndarray, y_test: np.ndarray):
+        try:
+            """
+            Reading the model and testing the model
+            """
+            model = load_model(model)
+            y_pred = model.predict(X_test)
+            mse = mean_squared_error(y_test, y_pred)
+            return mse
+        except Exception as e:
+            raise CustomException(e, sys)
+    def save_plot_predictions(self, model: str, X_test: np.ndarray, y_test: np.ndarray, ts_test: np.ndarray, model_evaluation_file_dirr: str):
+        try:
+            """
+            Plotting the predictions with time stamp data from ts_test and y_test
+            """
+
+            directory = os.path.dirname(model_evaluation_file_dirr)
+
+            os.makedirs(directory, exist_ok=True)
+
+            model = load_model(model) 
+            y_pred = model.predict(X_test)
+            plt.figure(figsize=(10, 5))
+            plt.plot(ts_test, y_test, label='Actual')
+            plt.plot(ts_test, y_pred, label='Predicted')
+            plt.legend()
+            plt.savefig(model_evaluation_file_dirr)
+        except Exception as e:
+            raise CustomException(e, sys)
+        
+    def initiate_model_evaluation(self):
+        try:
+            logger.info("Model Evaluation started")
+
+            model_train_file_path = self.model_training_artifact.train_model_path
+
+            model_evaluation_file_dirr = self.model_evaluation_config.model_evaluation_file_path
+            _, _, _, X_test, y_test, ts_test = read_preprocessed_data(filepath=self.preprocessed_data)
+
+            model_evaluation = self.evaluate_model(model=model_train_file_path, X_test=X_test, y_test=y_test)
+            self.save_plot_predictions(model=model_train_file_path, X_test=X_test, y_test=y_test, ts_test=ts_test, model_evaluation_file_dirr=model_evaluation_file_dirr)
+
+            if model_evaluation <= 0.01:
+                return ModelEvaluationArtifact(
+                    model_evaluation_file_path=model_evaluation_file_dirr,
+                    is_model_accepted=True
+                )
+            else:
+                return ModelEvaluationArtifact(
+                    model_evaluation_file_path=model_evaluation_file_dirr,
+                    is_model_accepted=False
+                    )
+            
+        except Exception as e:
+            raise CustomException(e, sys)

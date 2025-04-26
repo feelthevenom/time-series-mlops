@@ -48,5 +48,14 @@ Model traininig Configuration
 
 MODEL_TRAINED_FILE_DIRR: str = "Trained models"
 MODEL_TRAINED_FILE_NAME: str = "model.keras"
-TRAIN_EPOCHS: int = 15
+TRAIN_EPOCHS: int = 20
 TRAIN_BATCH_SIZE: int = 32
+
+"""
+Model Evaluation Configuration
+"""
+
+MODEL_EVALUATION_FILE_DIRR: str = "Model Evaluation"
+MODEL_EVALUATION_FILE_NAME: str = "model_evaluation.png"
+
+

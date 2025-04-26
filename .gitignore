@@ -3,3 +3,5 @@ myenv
 artifacts
 __pycache__
 logs
+
+mlruns

@@ -1,9 +1,9 @@
 from src.components.data_ingetion import DataIngestion
 from src.components.data_validation import DataValidation
 from src.components.data_transformtion import DataTransformation
-from src.components.model_training import ModelTrainging
-
-from src.entity.config_entity import DataingetionConfig, DatavalidationConfig, TrainingPipelineConfig, DataTransformationConfig, ModelTrainingConfig
+from src.components.model_training import ModelTraining
+from src.components.model_evaluate import ModelEvaluation
+from src.entity.config_entity import DataingetionConfig, DatavalidationConfig, TrainingPipelineConfig, DataTransformationConfig, ModelTrainingConfig, ModelEvaluationConfig
 
 
 if __name__ == "__main__":
@@ -34,6 +34,15 @@ if __name__ == "__main__":
     # Model training
     model_training_config = ModelTrainingConfig(training_pipeline_config = training_pipeline_config) 
 
-    model_training = ModelTrainging(datatransformation_artifcat= data_transformation_artifact, model_training_config = model_training_config)
+    model_training = ModelTraining(datatransformation_artifact= data_transformation_artifact, model_training_config = model_training_config)
 
-    model_training.initiate_model_training()
+    model_training_artifact = model_training.initiate_model_training()
+
+    # Model evaluation
+    model_evaluation_config = ModelEvaluationConfig(training_pipeline_config = training_pipeline_config)
+
+    model_evaluation = ModelEvaluation(model_evaluation_config = model_evaluation_config, model_training_artifact = model_training_artifact)
+    print(model_training_artifact.train_model_path)
+    model_evaluation_artifact = model_evaluation.initiate_model_evaluation()
+
+    print(model_evaluation_artifact.is_model_accepted)

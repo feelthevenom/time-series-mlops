@@ -21,3 +21,11 @@ class DataTransformationArtifact:
 @dataclass
 class ModelTrainingArtifact:
     train_model_path: str
+    preprocessed_data: str
+
+@dataclass
+class ModelEvaluationArtifact:
+    model_evaluation_file_path: str
+    is_model_accepted: bool
+
+

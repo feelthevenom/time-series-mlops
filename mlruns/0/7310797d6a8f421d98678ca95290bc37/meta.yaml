@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/7310797d6a8f421d98678ca95290bc37/artifacts
+end_time: 1745662519044
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7310797d6a8f421d98678ca95290bc37
+run_name: LSTM_Model_Training
+run_uuid: 7310797d6a8f421d98678ca95290bc37
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745662465854
+status: 3
+tags: []
+user_id: RAHUL R
