@@ -1,5 +1,5 @@
 from src.components.data_ingetion import DataIngestion
-from src.entity.config_entity import TrainingPipelineConfig, DataingetionConfig
+from src.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig
 from src.exception.exception import CustomException
 
 from src.logging.logger import logging
@@ -10,7 +10,7 @@ STAGE_NAME = "Data Ingestion"
 class DataIngestionPipeline:
     def __init__(self):
         self.training_pipeline_config = TrainingPipelineConfig()
-        self.data_ingestion_config = DataingetionConfig(training_pipeline_config=self.training_pipeline_config)
+        self.data_ingestion_config = DataIngestionConfig(training_pipeline_config=self.training_pipeline_config)
 
     def start_data_ingestion(self):
         try:

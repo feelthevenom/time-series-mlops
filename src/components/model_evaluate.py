@@ -9,7 +9,7 @@ from src.logging.logger import logging
 from src.exception.exception import CustomException
 
 from src.entity.config_entity import ModelEvaluationConfig
-from src.entity.artifact_entity import ModelEvaluationArtifact, ModelTrainingArtifact
+from src.entity.artifact_entity import ModelEvaluationArtifact
 
 from tensorflow.keras.models import load_model
 from sklearn.metrics import mean_squared_error
@@ -19,11 +19,10 @@ from src.utils.helper import read_preprocessed_data
 logger = logging.getLogger(__name__)
 
 class ModelEvaluation:
-    def __init__(self, model_evaluation_config: ModelEvaluationConfig, model_training_artifact: ModelTrainingArtifact):
+    def __init__(self, model_evaluation_config: ModelEvaluationConfig):
         try:
             self.model_evaluation_config = model_evaluation_config
-            self.model_training_artifact = model_training_artifact
-            self.preprocessed_data = self.model_training_artifact.preprocessed_data
+            self.preprocessed_data = self.model_evaluation_config.preprocessed_file_path
             
         except Exception as e:
             raise CustomException(e, sys)
@@ -68,7 +67,7 @@ class ModelEvaluation:
         try:
             logger.info("Model Evaluation started")
 
-            model_train_file_path = self.model_training_artifact.train_model_path
+            model_train_file_path = self.model_evaluation_config.train_model_file_path
 
             model_evaluation_file_dirr = self.model_evaluation_config.model_evaluation_file_path
             _, _, _, X_test, y_test, ts_test = read_preprocessed_data(filepath=self.preprocessed_data)

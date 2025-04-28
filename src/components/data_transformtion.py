@@ -5,19 +5,17 @@ import pandas as pd
 from src.logging.logger import logging
 from src.exception.exception import CustomException
 
-from src.entity.artifact_entity import DataTransformationArtifact, DataValidationArtifact
+from src.entity.artifact_entity import DataTransformationArtifact
 from src.entity.config_entity import DataTransformationConfig
 
-from src.utils.helper import create_sequences, write_preprocess_data_file
+from src.utils.helper import create_sequences, write_preprocess_data_file, read_yaml_file
 
 logger = logging.getLogger(__name__)
 
 class DataTransformation:
-    def __init__(self, datavalidation_artifact: DataValidationArtifact,
-                 datatranformation_config: DataTransformationConfig):
+    def __init__(self, datatranformation_config: DataTransformationConfig):
         
         self.datatranformation_config = datatranformation_config
-        self.datavalidation_artifact = datavalidation_artifact
 
     def read_dataframe(self, file_path: str) -> pd.DataFrame:
         """
@@ -73,12 +71,13 @@ class DataTransformation:
 
     def initiate_data_transforamtion(self):
         try:
-            logger.info(self.datavalidation_artifact.is_data_validated)
-            if self.datavalidation_artifact.is_data_validated:
+            status = read_yaml_file(self.datatranformation_config.data_report_file_path)
+            logger.info(f"Data validation status: {status}")
+            if status == True:
 
                 self.preprocess_data_into_npz(
-                    train_file_path= self.datavalidation_artifact.train_file_path,
-                    test_file_path= self.datavalidation_artifact.test_file_path,
+                    train_file_path= self.datatranformation_config.train_file_path,
+                    test_file_path= self.datatranformation_config.test_file_path,
                     window_size= self.datatranformation_config.window_size,
                     preprocessed_file_path= self.datatranformation_config.preprocessed_file_path
                 )

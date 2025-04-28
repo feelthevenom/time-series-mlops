@@ -22,9 +22,7 @@ stages:
     cmd: python -m src.pipeline.data_transformation_pipeline
     deps:
       - src/pipeline/data_transformation_pipeline.py
-      - artifacts/data_ingestion/feature_store.csv
-      - artifacts/data_ingestion/train.csv
-      - artifacts/data_ingestion/test.csv
+      - artifacts/data_validation/data_report.yaml
     outs:
       - artifacts/Preprocessed/preprocess.npz
 

@@ -24,6 +24,21 @@ def read_yaml_file(file_path: str)-> dict:
     except Exception as e:
         raise CustomException(e, sys)
     
+def write_yaml_file(file_path: str, content: dict):
+    """
+    Write a dictionary into a yaml file.
+    Args:
+        file_path (str): Path to the yaml file.
+        content (dict): Dictionary to write into the yaml file.
+    """
+    try:
+        logger.info(f"Writing yaml file: {file_path}")
+        with open(file_path, 'w') as file:
+            yaml.dump(content, file)
+        logger.info(f"Yaml file content: {content}")
+    except Exception as e:
+        raise CustomException(e, sys)
+    
 def write_preprocess_data_file(filepath: str, X_train: np, y_train, ts_train: np, X_test: np, y_test: np, ts_test: np):
     """
     Saves the preprocess of both train and test data into npz format.

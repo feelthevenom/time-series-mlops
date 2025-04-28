@@ -19,7 +19,10 @@
 
 ## Run the Application 
      dvc repro
+     
+## Check the pipeline diagram
 
+     dvc dag
 # Complete MLOPS project using Docker and Apache Airflow 
 
 # Data Ingetion

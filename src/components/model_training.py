@@ -11,17 +11,16 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 from src.logging.logger import logging
 from src.exception.exception import CustomException
-from src.entity.artifact_entity import ModelTrainingArtifact, DataTransformationArtifact
+from src.entity.artifact_entity import ModelTrainingArtifact
 from src.entity.config_entity import ModelTrainingConfig
 from src.utils.helper import read_preprocessed_data
 
 logger = logging.getLogger(__name__)
 
 class ModelTraining:
-    def __init__(self, datatransformation_artifact: DataTransformationArtifact,
-                        model_training_config: ModelTrainingConfig):
-        self.preprocessed_data = datatransformation_artifact.preprocessed_data_file
-        self.window_size = datatransformation_artifact.window_size
+    def __init__(self, model_training_config: ModelTrainingConfig):
+        self.preprocessed_data = model_training_config.preprocessed_file_path
+        self.window_size = model_training_config.window_size
         self.model_trained_path = model_training_config.train_model_file_path
         self.epochs = model_training_config.train_epoch
         self.batch_size = model_training_config.train_batch
