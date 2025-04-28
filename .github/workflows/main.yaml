@@ -30,14 +30,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t my-app:latest .
+          docker build -t mlops-sales-prediction:latest .
 
       - name: Run tests inside Docker
         run: |
-          docker run --rm my-app:latest pytest || true
-        # Remove '|| true' if you want the workflow to fail on test errors
+          docker run --rm mlops-sales-prediction:latest pytest || true
 
-      # Optional: Push Docker image to Docker Hub or GitHub Container Registry
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
