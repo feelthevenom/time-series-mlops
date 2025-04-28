@@ -1,3 +1,12 @@
+Metadata-Version: 2.1
+Name: Time-Series-Forecasting-Project
+Version: 0.0.0
+Summary: A small python package for time series forecasting
+Home-page: https://github.com/feelthevenom/time-series-mlops
+Author: Rahul Ravikumar
+Author-email: rahul.valli2003@gmail.com
+Project-URL: Bug Tracker, https://github.com/feelthevenom/time-series-mlops/issues
+
 # time-series-mlops
 
 # Installation Process and Run
@@ -15,10 +24,9 @@
      pip install -r requirements.txt
 
 ## Setup packages
-     pip install -e .
-
+     pip install -e
 ## Run the Application 
-     dvc repro
+     python app.py
 
 # Complete MLOPS project using Docker and Apache Airflow 
 

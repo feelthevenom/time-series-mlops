@@ -1,0 +1,46 @@
+stages:
+  data_ingestion:
+    cmd: python -m src.pipeline.data_ingestion_pipeline
+    deps:
+      - src/pipeline/data_ingestion_pipeline.py
+      - Dataset/retail_sales.csv
+    outs:
+      - artifacts/data_ingestion/feature_store.csv
+      - artifacts/data_ingestion/train.csv
+      - artifacts/data_ingestion/test.csv
+
+  data_validation:
+    cmd: python -m src.pipeline.data_valid_pipeline
+    deps:
+      - src/pipeline/data_valid_pipeline.py
+      - artifacts/data_ingestion/feature_store.csv
+      - artifacts/data_ingestion/train.csv
+      - artifacts/data_ingestion/test.csv
+
+
+  data_transformation:
+    cmd: python -m src.pipeline.data_transformation_pipeline
+    deps:
+      - src/pipeline/data_transformation_pipeline.py
+      - artifacts/data_ingestion/feature_store.csv
+      - artifacts/data_ingestion/train.csv
+      - artifacts/data_ingestion/test.csv
+    outs:
+      - artifacts/Preprocessed/preprocess.npz
+
+  model_training:
+    cmd: python -m src.pipeline.model_training_pipeline
+    deps:
+      - src/pipeline/model_training_pipeline.py
+      - artifacts/Preprocessed/preprocess.npz
+    outs:
+      - artifacts/Trained models/model.keras
+
+  model_evaluation:
+    cmd: python -m src.pipeline.model_eval_pipeline
+    deps:
+      - src/pipeline/model_eval_pipeline.py
+      - artifacts/Trained models/model.keras
+      - artifacts/Preprocessed/preprocess.npz
+    outs:
+      - artifacts/Model Evaluation/model_evaluation.png

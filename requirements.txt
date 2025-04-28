@@ -3,5 +3,7 @@ scikit-learn
 numpy
 matplotlib
 seaborn
-evidently
+mlflow
+tensorflow-io-gcs-filesystem==0.31.0
 tensorflow
+dvc

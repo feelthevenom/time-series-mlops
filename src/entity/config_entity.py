@@ -11,10 +11,10 @@ logger = logging.getLogger(__name__)
 
 class TrainingPipelineConfig:
     def __init__(self, time_stamp = datetime.now()):
-        time_stamp = time_stamp.strftime("%Y-%m-%d-%H-%M-%S")
-        self.pipeline_name = f"Training_Pipeline_{time_stamp}"
+        # time_stamp = time_stamp.strftime("%Y-%m-%d-%H-%M-%S")
+        # self.pipeline_name = f"Training_Pipeline_{time_stamp}"
         self.artifact_name = config.ARTIFACT_DIRR_NAME
-        self.artifact_dir = os.path.join(self.artifact_name, time_stamp)
+        self.artifact_dir = os.path.join(self.artifact_name)
         self.timestamp: str=time_stamp
 
 class DataingetionConfig:
