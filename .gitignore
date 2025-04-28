@@ -3,5 +3,6 @@ myenv
 artifacts
 __pycache__
 logs
+Time_Series_Forecasting_Project.egg-info
 
 mlruns
