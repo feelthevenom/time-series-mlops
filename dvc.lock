@@ -46,18 +46,10 @@ stages:
   data_transformation:
     cmd: python -m src.pipeline.data_transformation_pipeline
     deps:
-    - path: artifacts/data_ingestion/feature_store.csv
+    - path: artifacts/data_validation/data_report.yaml
       hash: md5
-      md5: 7e0083f5bff3e6b3d2ecd4db53456f5e
-      size: 1729574
-    - path: artifacts/data_ingestion/test.csv
-      hash: md5
-      md5: 3e7511d90797804b910949d28e697cfe
-      size: 345912
-    - path: artifacts/data_ingestion/train.csv
-      hash: md5
-      md5: d1f46a6d524abd42fab9296f4f5cd79f
-      size: 1383674
+      md5: 4d8ea71cdd123abd05c1ae6ef206e78d
+      size: 11
     - path: src/pipeline/data_transformation_pipeline.py
       hash: md5
       md5: 32676d3054dc423e9605adb09e4aa555
