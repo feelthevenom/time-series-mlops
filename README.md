@@ -19,10 +19,17 @@
 
 ## Run the Application 
      dvc repro
-     
-## Check the pipeline diagram
 
+## Check the pipeline diagram
      dvc dag
+
+# Run using Docker
+
+## Build the docker file
+     docker build -t mlops-sales-prediction:latest .
+## Run the docker file
+     docker run -it --name my-mlops-container mlops-sales-prediction:latest
+     
 # Complete MLOPS project using Docker and Apache Airflow 
 
 # Data Ingetion
