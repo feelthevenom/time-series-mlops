@@ -7,3 +7,4 @@ mlflow
 tensorflow-io-gcs-filesystem>=0.37.1
 tensorflow
 dvc
+influxdb-client

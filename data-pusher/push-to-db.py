@@ -4,7 +4,7 @@ import time
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 import requests
-from src.logging.logger import logging
+
 
 # InfluxDB Connection Details
 INFLUX_URL   = "http://storedata-db:8086"
@@ -19,19 +19,17 @@ MEASUREMENT  = "time_series_retail_sales"
 
 CSV_FILE = os.path.join(os.path.dirname(__file__), "retail_sales.csv")
 
-logger = logging.getLogger(__name__)
-
 def wait_for_influxdb(url, timeout=60):
     start = time.time()
     while time.time() - start < timeout:
         try:
             r = requests.get(url + "/health")
             if r.status_code == 200:
-                logger.info("InfluxDB is ready!")
+                print("InfluxDB is ready!")
                 return True
         except Exception:
             pass
-        logger.info("Waiting for InfluxDB to be ready...")
+        print("Waiting for InfluxDB to be ready...")
         time.sleep(2)
     raise Exception("InfluxDB did not become ready in time.")
 
@@ -63,26 +61,26 @@ class DataPusher:
         n_rows = len(df)
         n_40 = int(0.4 * n_rows)
 
-        logger.info(f"Loaded {n_rows} rows. Pushing first 40% ({n_40} rows)...")
+        print(f"Loaded {n_rows} rows. Pushing first 40% ({n_40} rows)...")
 
         for index, row in df.iloc[:n_40].iterrows():
             try:
-                logger.info(f"[{index+1}] Writing row - Date: {row['Date']}, Sales: {row['Sales']}")
+                print(f"[{index+1}] Writing row - Date: {row['Date']}, Sales: {row['Sales']}")
                 point = Point(self.measurement).time(row['Date'], WritePrecision.S).field("sales", row['Sales'])
                 self.write_api.write(bucket=INFLUX_BUCKET, org=INFLUX_ORG, record=point)
             except Exception as e:
-                logger.error(f"[ERROR] Failed to write row {index+1}: {e}")
+                print(f"[ERROR] Failed to write row {index+1}: {e}")
 
-        logger.info("✅ Finished writing 40%. Now writing 1 row/sec for remaining 60%...")
+        print("✅ Finished writing 40%. Now writing 1 row/sec for remaining 60%...")
 
         for index, row in df.iloc[n_40:].iterrows():
             try:
-                logger.info(f"[{index+1}] Writing row - Date: {row['Date']}, Sales: {row['Sales']}")
+                print(f"[{index+1}] Writing row - Date: {row['Date']}, Sales: {row['Sales']}")
                 point = Point(self.measurement).time(row['Date'], WritePrecision.S).field("sales", row['Sales'])
                 self.write_api.write(bucket=INFLUX_BUCKET, org=INFLUX_ORG, record=point)
                 time.sleep(1)
             except Exception as e:
-                logger.error(f"[ERROR] Failed to write row {index+1}: {e}")
+                print(f"[ERROR] Failed to write row {index+1}: {e}")
 
 if __name__ == "__main__":
     wait_for_influxdb(INFLUX_URL)

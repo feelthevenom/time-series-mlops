@@ -14,8 +14,8 @@ INFLUX_URL = "http://storedata-db:8086"
 INFLUX_TOKEN = "RahulSuperSecretToken2024"
 INFLUX_ORG = "Rahul-Personal"
 INFLUX_BUCKET = "TimeseriesRetailDB"
-
-
+INFLUX_MEASUREMENT = "time_series_retail_sales"
+INFLUX_FIELD = "sales"
 """"
 Data Ingestion Configuration
 """

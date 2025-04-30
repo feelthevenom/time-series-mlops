@@ -2,15 +2,19 @@ version: '3.8'
 
 services:
   sleek-airflow:
-    build: .                   # Build from the current directory where your Dockerfile is located.
+    build: .
     image: sleek-airflow:latest
     volumes:
       - ./airflow:/opt/airflow
+      - ./src:/app/src
+      - ./artifacts:/app/artifacts
     ports:
       - "8080:8080"
+    environment:
+      - PYTHONPATH=/app:/opt/airflow
     command: airflow standalone
     extra_hosts:
-      - "host.docker.internal:host-gateway"  # Ensures that host.docker.internal resolves to the host IP
+      - "host.docker.internal:host-gateway"
 
   storedata-db:
     image: influxdb:2
