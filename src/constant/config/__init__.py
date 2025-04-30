@@ -10,6 +10,10 @@ import os
 SCHEMA_FILE_NAME: str = "schema.yaml"
 WINDOW_SIZE=24
 
+INFLUX_URL = "http://storedata-db:8086"
+INFLUX_TOKEN = "RahulSuperSecretToken2024"
+INFLUX_ORG = "Rahul-Personal"
+INFLUX_BUCKET = "TimeseriesRetailDB"
 
 
 """"

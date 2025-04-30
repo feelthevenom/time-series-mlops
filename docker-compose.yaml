@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  sleek-airflow:
+    build: .                   # Build from the current directory where your Dockerfile is located.
+    image: sleek-airflow:latest
+    volumes:
+      - ./airflow:/opt/airflow
+    ports:
+      - "8080:8080"
+    command: airflow standalone
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # Ensures that host.docker.internal resolves to the host IP
+
+  storedata-db:
+    image: influxdb:2
+    ports:
+      - 8086:8086
+    env_file: ".env"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
+      interval: 5s
+      timeout: 2s
+      retries: 12
+
+  data-pusher:
+    build: ./data-pusher
+    image: data-pusher:latest
+    depends_on:
+      storedata-db:
+        condition: service_healthy

@@ -1,13 +1,14 @@
 import sys
 import os
 import pandas as pd
+from influxdb_client import InfluxDBClient
+
 
 from src.exception.exception import CustomException
 from src.logging.logger import logging
 
 from src.entity.artifact_entity import DataingestionArtifact
 from src.entity.config_entity import DataIngestionConfig
-from src.constant import config
 
 from sklearn.model_selection import train_test_split
 
@@ -16,7 +17,21 @@ logger = logging.getLogger(__name__)
 class DataIngestion:
     def __init__(self, data_ingestion_config: DataIngestionConfig):
         self.data_ingestion_config = data_ingestion_config
-        
+    
+    # def extract_data_from_influxdb(self):
+    #     """
+    #     Extract data from InfluxDB and return a DataFrame.
+    #     """
+    #     try:
+    #         client = InfluxDBClient(url=self.data_ingestion_config.influxdb_url, token=self.data_ingestion_config.influxdb_token)
+    #         query = 'from(bucket: "TimeseriesRetailDB") |> range(start: -10m) |> filter(fn: (r) => r["_measurement"] == "time_series_retail_sales") |> filter(fn: (r) => r["_field"] == "sales") |> yield(name: "0")'
+    #         result = client.query(query)
+    #         df = result.to_pandas()
+    #         df.to_csv(self.data_ingestion_config.feature_store_file_path, index=True)
+    #         logger.info(f"Feature store file saved at {self.data_ingestion_config.feature_store_file_path}.")
+    #         return df
+    #     except Exception as e:
+    #         raise CustomException(e, sys)
     def read_source_data(self):
         """
         Read the source data from the dataset directory and return a DataFrame.

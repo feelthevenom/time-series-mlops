@@ -6,3 +6,4 @@ logs
 Time_Series_Forecasting_Project.egg-info
 
 mlruns
+.env
