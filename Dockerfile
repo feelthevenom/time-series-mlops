@@ -20,10 +20,6 @@ ENV PYTHONPATH="/app:${PYTHONPATH}"
 
 USER root
 
-# Optionally copy DAGs or plugins if needed
-# COPY dags/ /opt/airflow/dags/
-# COPY plugins/ /opt/airflow/plugins/
-
 USER airflow
 
 CMD ["webserver"]

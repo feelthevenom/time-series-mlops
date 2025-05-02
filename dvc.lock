@@ -1,0 +1,103 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python -m src.pipeline.data_ingestion_pipeline
+    deps:
+    - path: src/pipeline/data_ingestion_pipeline.py
+      hash: md5
+      md5: 113c012a711c5447010bcbf2cc8c9063
+      size: 1055
+      isexec: true
+    outs:
+    - path: artifacts/data_ingestion/feature_store.csv
+      hash: md5
+      md5: 86077e3ec5c9c1176c577fa202f71ef0
+      size: 415390
+    - path: artifacts/data_ingestion/test.csv
+      hash: md5
+      md5: 2845be27e0e084ed3907ed72bf606db3
+      size: 83139
+    - path: artifacts/data_ingestion/train.csv
+      hash: md5
+      md5: efd59905a9e627a51ff38cbf11dadf88
+      size: 332262
+  data_validation:
+    cmd: python -m src.pipeline.data_valid_pipeline
+    deps:
+    - path: artifacts/data_ingestion/feature_store.csv
+      hash: md5
+      md5: 86077e3ec5c9c1176c577fa202f71ef0
+      size: 415390
+    - path: artifacts/data_ingestion/test.csv
+      hash: md5
+      md5: 2845be27e0e084ed3907ed72bf606db3
+      size: 83139
+    - path: artifacts/data_ingestion/train.csv
+      hash: md5
+      md5: efd59905a9e627a51ff38cbf11dadf88
+      size: 332262
+    - path: src/pipeline/data_valid_pipeline.py
+      hash: md5
+      md5: b16d2afbb0957ab6c667178cb46ef5f4
+      size: 1350
+      isexec: true
+    outs:
+    - path: artifacts/data_validation/data_report.yaml
+      hash: md5
+      md5: d3b7eaa996b4d329e248d80eeefca1d1
+      size: 9
+  data_transformation:
+    cmd: python -m src.pipeline.data_transformation_pipeline
+    deps:
+    - path: artifacts/data_validation/data_report.yaml
+      hash: md5
+      md5: d3b7eaa996b4d329e248d80eeefca1d1
+      size: 9
+    - path: src/pipeline/data_transformation_pipeline.py
+      hash: md5
+      md5: 32676d3054dc423e9605adb09e4aa555
+      size: 1399
+      isexec: true
+    outs:
+    - path: artifacts/Preprocessed/preprocess.npz
+      hash: md5
+      md5: 842d0d1e208b5c7e591579a855624057
+      size: 3275696
+  model_training:
+    cmd: python -m src.pipeline.model_training_pipeline
+    deps:
+    - path: artifacts/Preprocessed/preprocess.npz
+      hash: md5
+      md5: 7545daa48a9b64f8bafdf902de81ae70
+      size: 3035996
+    - path: src/pipeline/model_training_pipeline.py
+      hash: md5
+      md5: 0b04b3f8a6ab45449e70d9167e35eb10
+      size: 1288
+      isexec: true
+    outs:
+    - path: artifacts/Trained models/model.keras
+      hash: md5
+      md5: aed3359ab959deab19855cbc55928b60
+      size: 149585
+  model_evaluation:
+    cmd: python -m src.pipeline.model_eval_pipeline
+    deps:
+    - path: artifacts/Preprocessed/preprocess.npz
+      hash: md5
+      md5: 7545daa48a9b64f8bafdf902de81ae70
+      size: 3035996
+    - path: artifacts/Trained models/model.keras
+      hash: md5
+      md5: aed3359ab959deab19855cbc55928b60
+      size: 149585
+    - path: src/pipeline/model_eval_pipeline.py
+      hash: md5
+      md5: a4ff0595bb60618f5b70bfccee73aedc
+      size: 1832
+      isexec: true
+    outs:
+    - path: artifacts/Model Evaluation/model_evaluation.png
+      hash: md5
+      md5: 1295374072d43fc8308cccb631780e32
+      size: 153181
