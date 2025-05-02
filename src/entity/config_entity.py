@@ -21,6 +21,18 @@ class DataIngestionConfig:
         Data Ingestion Configuration for ingesting the data from the source and saving it to the specified directory.
         """
         try:
+            # InfluxDB URL
+            self.influxdb_url: str = config.INFLUX_URL
+            # InfluxDB Token
+            self.influxdb_token: str = config.INFLUX_TOKEN
+            # InfluxDB Organization
+            self.influxdb_org: str = config.INFLUX_ORG
+            # InfluxDB Bucket
+            self.influxdb_bucket: str = config.INFLUX_BUCKET
+            # InfluxDB Measurement
+            self.influxdb_measurement: str = config.INFLUX_MEASUREMENT
+            # InfluxDB Field
+            self.influxdb_field: str = config.INFLUX_FIELD
             # Dataset Directory
             self.dataset_dir: str = os.path.join(config.DATA_DIRR, config.DATA_FILE_NAME)
             # Data Ingested Directory

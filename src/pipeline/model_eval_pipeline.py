@@ -3,8 +3,10 @@ from src.entity.config_entity import TrainingPipelineConfig, ModelEvaluationConf
 from src.exception.exception import CustomException
 from src.logging.logger import logging
 import sys
-
+import os
 STAGE_NAME = "Model Evaluation"
+
+print("Starting model evaluation pipeline...")
 
 class ModelEvaluationPipeline:
     def __init__(self):
@@ -13,6 +15,11 @@ class ModelEvaluationPipeline:
 
     def start_model_evaluation(self):
         try:
+            print("Checking model and preprocessed file existence...")
+            print("Model path:", self.model_evaluation_config.train_model_file_path)
+            print("Preprocessed path:", self.model_evaluation_config.preprocessed_file_path)
+            print("Model exists:", os.path.exists(self.model_evaluation_config.train_model_file_path))
+            print("Preprocessed exists:", os.path.exists(self.model_evaluation_config.preprocessed_file_path))
             # Run model evaluation
             model_evaluation = ModelEvaluation(
                 model_evaluation_config=self.model_evaluation_config
@@ -21,6 +28,7 @@ class ModelEvaluationPipeline:
             logging.info(f"Model Evaluation Pipeline Completed")
             logging.info(f"{'='*20} {STAGE_NAME} {'='*20}")
         except Exception as e:
+            print("Exception occurred:", e)
             raise CustomException(e, sys)
 
 if __name__ == "__main__":

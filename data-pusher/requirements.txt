@@ -1,0 +1,4 @@
+dotenv
+pandas
+influxdb-client
+requests
