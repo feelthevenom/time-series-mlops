@@ -3,7 +3,6 @@ stages:
     cmd: python -m src.pipeline.data_ingestion_pipeline
     deps:
       - src/pipeline/data_ingestion_pipeline.py
-      - Dataset/retail_sales.csv
     outs:
       - artifacts/data_ingestion/feature_store.csv
       - artifacts/data_ingestion/train.csv
@@ -16,7 +15,8 @@ stages:
       - artifacts/data_ingestion/feature_store.csv
       - artifacts/data_ingestion/train.csv
       - artifacts/data_ingestion/test.csv
-
+    outs:
+      - artifacts/data_validation/data_report.yaml
 
   data_transformation:
     cmd: python -m src.pipeline.data_transformation_pipeline

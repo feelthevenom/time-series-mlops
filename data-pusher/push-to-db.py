@@ -8,9 +8,6 @@ import requests
 
 # InfluxDB Connection Details
 INFLUX_URL   = "http://storedata-db:8086"
-# INFLUX_TOKEN = os.getenv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN")
-# INFLUX_ORG   = os.getenv("DOCKER_INFLUXDB_INIT_ORG")
-# INFLUX_BUCKET= os.getenv("DOCKER_INFLUXDB_INIT_BUCKET")
 INFLUX_TOKEN = "RahulSuperSecretToken2024"
 INFLUX_ORG   = "Rahul-Personal"
 INFLUX_BUCKET= "TimeseriesRetailDB"
@@ -20,6 +17,14 @@ MEASUREMENT  = "time_series_retail_sales"
 CSV_FILE = os.path.join(os.path.dirname(__file__), "retail_sales.csv")
 
 def wait_for_influxdb(url, timeout=60):
+    """
+    Wait for InfluxDB to be ready by checking the health endpoint and preventing the script from exiting prematurely.
+    Args:
+        url (str): The URL of the InfluxDB instance.
+        timeout (int): The maximum time to wait for InfluxDB to be ready.
+    Returns:
+        bool: True if InfluxDB is ready, False otherwise.
+    """
     start = time.time()
     while time.time() - start < timeout:
         try:

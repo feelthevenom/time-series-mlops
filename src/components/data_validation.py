@@ -93,23 +93,36 @@ class DataValidation:
         
     def initiate_data_validation(self):
         try:
-            # Validate feature store column.
-            self.is_columns_exist(schema_file_path= self.data_validation_config.schema_file_path, file_path = self.data_validation_config.feature_store_file_path)
-            # Validate the train and test column and data type.
-            validate_status = self.is_columns_same_train_test(train_file_path = self.data_validation_config.train_file_path, test_file_path = self.data_validation_config.test_file_path)
-
-            logger.info(f"Validation status = {validate_status}")
-            directory = os.path.dirname(self.data_validation_config.data_report_file_path)
-
-            os.makedirs(directory, exist_ok=True)
+            # Create validation directory structure regardless of DVC status
+            validation_dir = os.path.dirname(self.data_validation_config.data_report_file_path)
+            drift_report_dir = self.data_validation_config.drift_report_dir_path
             
-            # Save the validation report
-            write_yaml_file(file_path=self.data_validation_config.data_report_file_path, content=validate_status)
+            # Ensure directories exist
+            os.makedirs(validation_dir, exist_ok=True)
+            os.makedirs(drift_report_dir, exist_ok=True)
+            
+            # Check if data report already exists
+            if os.path.exists(self.data_validation_config.data_report_file_path):
+                logger.info("Data validation report already exists, using existing validation status")
+                validate_status = read_yaml_file(self.data_validation_config.data_report_file_path)
+            else:
+                # Perform validation only if report doesn't exist
+                self.is_columns_exist(schema_file_path=self.data_validation_config.schema_file_path, 
+                                   file_path=self.data_validation_config.feature_store_file_path)
+                validate_status = self.is_columns_same_train_test(
+                    train_file_path=self.data_validation_config.train_file_path,
+                    test_file_path=self.data_validation_config.test_file_path
+                )
+                logger.info(f"Validation status = {validate_status}")
+                
+                # Save the validation report
+                write_yaml_file(file_path=self.data_validation_config.data_report_file_path, 
+                              content=validate_status)
 
             return DataValidationArtifact(
-                train_file_path = self.data_validation_config.train_file_path,
-                test_file_path= self.data_validation_config.test_file_path,
-                is_data_validated = validate_status
+                train_file_path=self.data_validation_config.train_file_path,
+                test_file_path=self.data_validation_config.test_file_path,
+                is_data_validated=validate_status
             )
         except Exception as e:
             raise CustomException(e, sys)

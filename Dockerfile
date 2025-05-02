@@ -19,10 +19,6 @@ RUN pip install -e /app
 ENV PYTHONPATH="/app:${PYTHONPATH}"
 
 USER root
-# Install system packages (e.g., git)
-RUN apt-get update && \
-    apt-get -y install git && \
-    apt-get clean
 
 # Optionally copy DAGs or plugins if needed
 # COPY dags/ /opt/airflow/dags/
